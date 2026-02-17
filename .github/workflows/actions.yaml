@@ -40,30 +40,15 @@ jobs:
         gcloud --quiet auth configure-docker
     
     # Build the Docker image
-
-    # Verify Docker works at all
-    - name: Test Docker
-      run: docker build .
-
-    # Print the expanded command
-    - name: Debug variables
-      run: |
-        echo "PROJECT_ID=$PROJECT_ID"
-        echo "IMAGE=$IMAGE"
-        echo "GITHUB_SHA=$GITHUB_SHA"
-        echo "GITHUB_REF=$GITHUB_REF"
-    
-    # Confirm Dockerfile exists
-    - run: pwd && ls -la
-
-    # Build the Docker image
     - name: Build
       shell: bash
       run: |
+        SAFE_REF=$(echo "$GITHUB_REF" | tr '/' '-')
+
         docker build \
-          --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
-          --build-arg "GITHUB_SHA=$GITHUB_SHA" \
-          --build-arg "GITHUB_REF=$GITHUB_REF" \
+          --tag "gcr.io/${PROJECT_ID}/${IMAGE}:${GITHUB_SHA}" \
+          --build-arg "GITHUB_SHA=${GITHUB_SHA}" \
+          --build-arg "GITHUB_REF=${SAFE_REF}" \
           .
 
     # Push the Docker image to Google Container Registry

@@ -51,6 +51,12 @@ jobs:
           --build-arg "GITHUB_REF=${SAFE_REF}" \
           .
 
+
+    - name: Verify auth + image
+      run: |
+        docker images
+        gcloud auth list
+
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-

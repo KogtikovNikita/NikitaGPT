@@ -57,6 +57,9 @@ jobs:
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
+    - name: Configure Docker to use gcloud auth
+      run: gcloud auth configure-docker
+
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-

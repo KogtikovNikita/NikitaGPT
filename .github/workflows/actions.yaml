@@ -51,6 +51,15 @@ jobs:
           --build-arg "GITHUB_REF=${SAFE_REF}" \
           .
 
+
+    - name: Create Artifact Registry repo for gcr.io
+      run: |
+        gcloud artifacts repositories create gcr.io \
+          --repository-format=docker \
+          --location=us \
+          --project=$PROJECT_ID || true
+
+
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-

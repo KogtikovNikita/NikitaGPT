@@ -52,10 +52,10 @@ jobs:
           .
 
 
-    - name: Verify auth + image
-      run: |
-        docker images
-        gcloud auth list
+    - name: Auth to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
     # Push the Docker image to Google Container Registry
     - name: Publish

@@ -1,1 +1,0 @@
-assistant_id = "asst_tYKQLXsv5hk0oIfGNn4YhD2f"
